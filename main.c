@@ -7,15 +7,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#include <string.h>
 
 struct args {
 
   /* Path del archivo con los datos de entrada */
-  const char* pathEntrada;
+  const char* path_entrada;
 
-  /* Boolean ndica si se usa stdin */
-  const char* pathSalida;
+  /* Path salida */
+  const char* path_salida;
+  
+  /* Boolean indica si se usa stdout */
+  bool usa_std_out;
 };
 
 
@@ -53,11 +56,12 @@ static void _print_version(const char *bin_name) {
   printf("%s, versión 1.00\n", bin_name);
 }
 
-static void _arg_parse(int argc, const char **argv) {
+static void _arg_parse(struct args* args,int argc, const char **argv) {
     
   int ch = -1;
+  args->usa_std_out = true;
 
-  while ((ch = getopt_long(argc, (char **)argv, "hVbcwli:", _long_opts, NULL)) != -1) {
+  while ((ch = getopt_long(argc, (char **)argv, "hVo:", _long_opts, NULL)) != -1) {
     switch (ch) {
       case 'h':
         _print_help(argv[0]);
@@ -69,15 +73,31 @@ static void _arg_parse(int argc, const char **argv) {
         exit(0);
         break;
         
+      case 'o':
+        args->usa_std_out = false;
+        args->path_salida = argv[optind - 1];
+        break;
+        
       /* this is returned when a required argument was not provided */
-      case ':':
       case '?':
         exit(1);
+        break;
+      
     }
   }
+  
+  if(optind < argc){
+    args->path_entrada = argv[optind]; 
+    optind++;       
+    }else{ 
+       printf("No file specified\n"); 
+       exit(1); 
+    }
+  
 }
 
 
 int main(int argc, const char *argv[]){
-    _arg_parse(argc, argv);
+    struct args args;
+    _arg_parse(&args,argc, argv);
 }
