@@ -93,16 +93,45 @@ static void _arg_parse(struct args* args,int argc, const char **argv) {
        fprintf( stderr, "No file specified\n"); 
        exit(1); 
     }
-  
+}
+
+void abrir_archivos(struct args args, FILE* archivo_entrada, FILE* archivo_salida){
+    archivo_entrada = fopen(args.path_entrada, "r");
+    if (archivo_entrada == 0) {
+       perror("Input file error");
+    }
+    
+    if(args.usa_std_out)
+        archivo_salida = stdout;
+    else{
+        archivo_salida = fopen(args.path_salida, "w");
+        if (archivo_salida == 0) {
+            perror("Output file error");
+        }
+    }
+    
+    //Si alguno de los dos fallo cancelo lo hecho y salgo
+    if(archivo_entrada == 0 || archivo_salida == 0){
+        
+        if(archivo_entrada != 0){
+            fclose(archivo_entrada);
+        }
+        
+        if(archivo_salida != 0){
+            fclose(archivo_salida);
+            remove(args.path_salida);
+        }
+        
+        exit(1);
+    }
 }
 
 int main(int argc, const char *argv[]){
     struct args args;
     _arg_parse(&args,argc, argv);
-    FILE* archivo_entrada = fopen(args.path_entrada, "r");
-    FILE* archivo_salida = fopen(args.path_entrada, "r");
-    if (archivo_entrada == 0 || archivo_salida == 0) {
-      perror("Error");
-      exit(0);
-    }
+    FILE* archivo_entrada;
+    FILE* archivo_salida;
+    abrir_archivos(args, archivo_entrada, archivo_salida);
+    
+
 }
