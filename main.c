@@ -90,14 +90,19 @@ static void _arg_parse(struct args* args,int argc, const char **argv) {
     args->path_entrada = argv[optind]; 
     optind++;       
     }else{ 
-       printf("No file specified\n"); 
+       fprintf( stderr, "No file specified\n"); 
        exit(1); 
     }
   
 }
 
-
 int main(int argc, const char *argv[]){
     struct args args;
     _arg_parse(&args,argc, argv);
+    FILE* archivo_entrada = fopen(args.path_entrada, "r");
+    FILE* archivo_salida = fopen(args.path_entrada, "r");
+    if (archivo_entrada == 0 || archivo_salida == 0) {
+      perror("Error");
+      exit(0);
+    }
 }
