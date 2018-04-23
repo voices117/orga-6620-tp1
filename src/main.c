@@ -131,10 +131,10 @@ int main(int argc, const char *argv[]){
     struct args args;
     FILE* archivo_entrada;
     FILE* archivo_salida;
-    unsigned int cantidad_de_filas;
-    unsigned int cantidad_de_columnas;
-    unsigned int cantidad_de_filas_traspuesta;
-    unsigned int cantidad_de_columnas_traspuesta;
+    int cantidad_de_filas;
+    int cantidad_de_columnas;
+    int cantidad_de_filas_traspuesta;
+    int cantidad_de_columnas_traspuesta;
     long long int* matriz_entrada;
     long long int* matriz_salida;
     int i = 0;
@@ -145,7 +145,29 @@ int main(int argc, const char *argv[]){
     
     abrir_archivos(args, &archivo_entrada, &archivo_salida);
 
-    fscanf(archivo_entrada,"%u %u\n", &cantidad_de_filas, &cantidad_de_columnas );
+    fscanf(archivo_entrada, "%s ", string_cargado);
+    cantidad_de_filas = strtol(string_cargado, &direccion_caracter_no_numerico, 0);
+    if(*direccion_caracter_no_numerico != '\0'){
+        fprintf( stderr, "Input file doesn't have a valid format\n"); 
+        exit(1);
+    }
+    if(cantidad_de_filas < 1){
+        fprintf( stderr, "Number of rows must be positive\n"); 
+        exit(1);
+    }
+        
+        
+    fscanf(archivo_entrada, "%s ", string_cargado);
+    cantidad_de_columnas = strtol(string_cargado, &direccion_caracter_no_numerico, 0);
+    if(*direccion_caracter_no_numerico != '\0'){
+        fprintf( stderr, "Input file doesn't have a valid format\n"); 
+        exit(1);
+    }
+    if(cantidad_de_columnas < 1){
+        fprintf( stderr, "Number of columns must be positive\n"); 
+        exit(1);
+    }
+    
     matriz_entrada = malloc(sizeof(long long int) * cantidad_de_filas * cantidad_de_columnas);
     matriz_salida = malloc(sizeof(long long int) * cantidad_de_filas * cantidad_de_columnas);
     
