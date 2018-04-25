@@ -11,8 +11,9 @@
  */
 int trasponer(unsigned int filas, unsigned int columnas, const long long *entrada,
               long long *salida) {
-  for (unsigned i = 0; i < filas; i++) {
-    for (unsigned j = 0; j < columnas; j++) {
+  unsigned i,j;
+  for (i = 0; i < filas; i++) {
+    for (j = 0; j < columnas; j++) {
       salida[j * filas + i] = entrada[i * columnas + j];
     }
   }

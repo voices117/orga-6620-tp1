@@ -137,7 +137,7 @@ int main(int argc, const char *argv[]){
     int cantidad_de_columnas_traspuesta;
     long long int* matriz_entrada;
     long long int* matriz_salida;
-    int i = 0;
+    int indice_matriz_entrada = 0;
     char* direccion_caracter_no_numerico = NULL;
     char string_cargado[50];
     long long int numero_cargado;
@@ -181,8 +181,8 @@ int main(int argc, const char *argv[]){
             exit(1);
         }
         
-        matriz_entrada[i] = numero_cargado;
-        i++;
+        matriz_entrada[indice_matriz_entrada] = numero_cargado;
+        indice_matriz_entrada++;
         
     }
     
@@ -191,8 +191,10 @@ int main(int argc, const char *argv[]){
     cantidad_de_filas_traspuesta = cantidad_de_columnas;
     
     fprintf(archivo_salida, "%u %u\n", cantidad_de_filas_traspuesta, cantidad_de_columnas_traspuesta );
-    for (unsigned i = 0; i < cantidad_de_filas_traspuesta; i++) {
-        for (unsigned j = 0; j < cantidad_de_columnas_traspuesta; j++) {
+    
+    unsigned i,j;
+    for (i = 0; i < cantidad_de_filas_traspuesta; i++) {
+        for (j = 0; j < cantidad_de_columnas_traspuesta; j++) {
             fprintf(archivo_salida, "%lld ",matriz_salida[i * cantidad_de_columnas_traspuesta + j]);
         } 
         fputc('\n', archivo_salida);
