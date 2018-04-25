@@ -1,8 +1,6 @@
-
-
 c: main.c matrix.c
-	gcc $^ -o tp
+	gcc main.c matrix.c -o tp
 
 assembly: main.c matrix.S
-	gcc $^ -o tp_assembly -D__MIPS__
+	gcc main.c matrix.S -o tp_assembly -D__MIPS__
 
