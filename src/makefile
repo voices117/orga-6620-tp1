@@ -1,30 +1,8 @@
-IDIR =../include
-CC=gcc
-CFLAGS=-I$(IDIR)
-
-ODIR=.
-LDIR =.
-
-LIBS=-lm
-
-_DEPS = matrix.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = main.o matrix.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+c: main.c matrix.c
+	gcc $^ -o tp
 
+assembly: main.c matrix.S
+	gcc $^ -o tp_assembly -D__MIPS__
 
-matrix.o: matrix.S
-	nasm -f elf -g -F stabs matrix.S
-
-matrix: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-.PHONY: clean
-
-clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
