@@ -1,4 +1,6 @@
 \documentclass[11pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
 
 \usepackage{listings}
 \lstset{
@@ -30,7 +32,7 @@ breaklines=true
     \end{center}
     \begin{center}
       \Large{
-         66:20 Organización de Computadoras
+         66:20 Organizaci\'on de Computadoras
       }
     \end{center}
     \vspace{0.2cm}\\
@@ -60,9 +62,8 @@ breaklines=true
 
 \section{Objetivos}
 
-Familiarizarse con las herramientas de software que usaremos en los siguientes trabajos,
-implementando un programa y su correspondiente documentación que resuelvan el problema
-descripto más abajo.
+Familiarizarse con el conjunto de instrucciones MIPS32 y el concepto de
+ABI, escribiendo un programa portable que trasponga una matriz leida desde un archivo.
 
 \section{Alcance}
 
@@ -160,15 +161,61 @@ A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembler, 
 
 \section{Corridas de prueba}
 
-[insertar las imagenes de las corridas de pruebas]
+Para facilitar el desarrollo se implementó un pequeño conjunto de unit tests
+de la función trasponer que validan varias entradas y salidas.
+
+Para ejecutar las pruebas basta con utilizar el comando \texttt{make test\_c} o
+\texttt{make test\_assembly} y ejecutar el binario resultante.
+
+Esto resultó de gran ayuda al momento de desarrollar en assembly ya que permitió
+verificar rápidamente el correcto funcionamiento de código.
 
 \section{Diagramas del Stack}
 
-[insertar diagramas del stack para la funci\'on trasponer]
+A continuaci\'on se muestra el diagrama de stack utilizado en el desarrollo de
+la funci\'on "trasponer":
 
-\section{Concluciones}
+\begin{table}[h!]
+  \begin{center}
+    \label{tab:table1}
+    \begin{tabular}{|c|c|c}
+        \cline{1-2}
+        memoria & secci\'on & \\
+        \cline{1-2}
+        \cline{1-2}
+        $a_3$ & \multirow{4}{*}{ABA} & \multirow{4}{*}{caller}\\
+        \cline{1-1}
+        $a_2$ & &\\
+        \cline{1-1}
+        $a_1$ & &\\
+        \cline{1-1}
+        $a_0$ & &\\
+        \hline
+        $f_p$ & \multirow{2}{*}{SRA} & \multirow{2}{*}{callee}\\
+        \cline{1-1}
+        $g_p$ & &\\
+        \cline{1-2}
+    \end{tabular}
+    \caption{Stack}
+  \end{center}
+\end{table}
 
-[Incluir algun tipo de conclusiones]
+La funci\'on no tiene ABA propia ya que es hoja. Por la misma raz\'on, no
+es necesario guardar el registro $r_a$ ni los registros $s_i$ y la SRA solo necesita tener 8 bytes.
+No fue necesario almacenar otros datos en memoria ya que alcanzó con utilizar
+los registros $t_i$.
+
+\section{Conclusiones}
+
+Desarrollar una funci\'on en assembly es notablemente mas complicado que su equivalente en C y
+adem\'as se pierde la portabilidad provista por el lenguaje. Por otra parte, el compilador
+realiza un buen trabajo optimizando el c\'odigo (compilando con -O3) ya que se observ\'o una
+leve mejora con respecto a la implementaci\'on en assembly.
+
+Esto indica que no es trivial la optmizaci\'on de esta forma y no siempre
+vale la pena, ya que el costo de desarrollo es mucho mayor y por lo tanto, se
+debe evaluar bien en que casos se puede lograr una mejora al programar en
+assembly, y cu\'al ser\'ia su costo final.
 
 \subsection{Preguntas disparadoras}
 
@@ -176,7 +223,10 @@ A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembler, 
 
 \subsection{Problemas encontrados a lo largo del proyecto}
 
-[Incluir problemas que hayan surgido de la elaboraci\'on del proyecto]
+Es f\'acil introducir bugs sutiles en el programa que luego son dificiles de 
+encontrar. Durante el desarrollo se debi\'o utilizar GDB, pero fue importante
+investigar sobre su uso, ya que se deben usar las directivas "stepi" o "nexti"
+para poder avanzar instrucciones individuales.
 
 \subsection{Futuras investigaciones}
 
