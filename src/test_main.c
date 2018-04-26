@@ -12,10 +12,12 @@ extern int trasponer(unsigned int filas, unsigned int columnas, const long long 
 void assert_eq(size_t size, const long long *obtained, const long long *expected) {
   for (size_t i = 0; i < size; i++) {
     if (obtained[i] != expected[i]) {
-      printf("[ERROR]\n");
+      printf("  [ERROR]\n");
       exit(1);
     }
   }
+
+  printf("  [OK]\n");
 }
 
 void test(int rows, int cols, const long long *in, const long long *expected) {
@@ -28,7 +30,7 @@ void test(int rows, int cols, const long long *in, const long long *expected) {
 int main(int argc, const char *argv[]) {
   /* 3x3 */
   {
-    printf("3x3\n");
+    printf("Matriz de 3x3\n");
     long long in[] = {0, 1, 2,  //
                       3, 4, 5,  //
                       6, 7, 8};
@@ -43,7 +45,7 @@ int main(int argc, const char *argv[]) {
 
   /* 3x5 */
   {
-    printf("3x5\n");
+    printf("Matriz de 3x5\n");
     long long in[] = {0,  1,  2,  3,  4,  //
                       5,  6,  7,  8,  9,  //
                       11, 12, 13, 14, 15};
@@ -60,7 +62,7 @@ int main(int argc, const char *argv[]) {
 
   /* 1x1 */
   {
-    printf("1x1\n");
+    printf("Matriz de 1x1\n");
     long long in[] = {10};
     const long long expected[] = {10};
     int rows = 1;
@@ -71,7 +73,7 @@ int main(int argc, const char *argv[]) {
 
   /* 1x5 */
   {
-    printf("1x5\n");
+    printf("Matriz de 1x5\n");
     long long in[] = {4, 3, 2, 1, 0};
     const long long expected[] = {4, 3, 2, 1, 0};
     int rows = 1;
@@ -82,7 +84,7 @@ int main(int argc, const char *argv[]) {
 
   /* 5x1 */
   {
-    printf("5x1\n");
+    printf("Matriz de 5x1\n");
     long long in[] = {4, 3, 2, 1, 0};
     const long long expected[] = {4, 3, 2, 1, 0};
     int rows = 5;
