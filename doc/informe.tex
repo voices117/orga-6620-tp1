@@ -71,9 +71,10 @@ ABI, escribiendo un programa portable que trasponga una matriz leida desde un ar
 Este trabajo práctico es de elaboración grupal, evaluación individual, y de carácter obligatorio para todos alumnos del curso.
 
 \section{Requisitos}
-El trabajo deber\'a ser entregado personalmente, en la fecha estipulada, con una car\'atula que contenga los datos completos de todos los integrantes.\\
 
-Adem\'as, es necesario que el trabajo pr\'actico incluya, la presentaci\'on de los resultados obtenidos, explicando, cuando corresponda, con fundamentos reales, las causas o razones de cada resultado obtenido.\\
+El trabajo deber\'a ser entregado personalmente, en la fecha estipulada, con una car\'atula que contenga los datos completos de todos los integrantes.
+
+Adem\'as, es necesario que el trabajo pr\'actico incluya, la presentaci\'on de los resultados obtenidos, explicando, cuando corresponda, con fundamentos reales, las causas o razones de cada resultado obtenido.
 
 El informe deber\'a respetar el modelo de referencia que se encuentra en el grupo, y se valorar\'an aquellos escritos usando la herramienta TEX / LATEX.
 
@@ -82,11 +83,11 @@ El informe deber\'a respetar el modelo de referencia que se encuentra en el grup
 Usaremos el programa GXemul para simular el entorno de desarrollo que utilizaremos en este y otros trabajos prácticos, una máquina MIPS corriendo una versión reciente del sistema operativo NetBSD.
 Durante la primera clase del curso presentaremos brevemente los pasos necesarios para la
 instalación y configuración del entorno de desarrollo.
-\\
+
 \section{Fecha de entrega}
 
 La última fecha de entrega y presentación ser\'a el jueves 26 de abril de 2018.
-\\
+
 \section{Informe}\label{informe}
 El informe deberá incluir:
 \begin{itemize}
@@ -124,7 +125,7 @@ Options:
 
 \end{lstlisting}
 
-Asimismo, se debieron tener en cuenta y validar los siguientes casos en donde alg\'un factor es incorrecto y el mensaje devuelto por el probrama debe ser explicativo del error:\\
+Asimismo, se debieron tener en cuenta y validar los siguientes casos en donde alg\'un factor es incorrecto y el mensaje devuelto por el probrama debe ser explicativo del error:
 
 \begin{itemize}
 \item \textbf{No se pudo abrir algun archivo:} se debe no solo expresar claramente que se fall\'o al abrir un archivo, sino que tambien se debe especificar si fue en el de entrada o el de salida
@@ -132,9 +133,9 @@ Asimismo, se debieron tener en cuenta y validar los siguientes casos en donde al
 \item \textbf{Archivos vac\'ios:} solo se aceptar\'an matrices de entrada con al menos una colunma y una fila. 
 \end{itemize}
 
-Una vez pasadas las validaciones, se proceder\'a a cargar la matriz primero obteniendo la cantidad de filas/columnas (utilizando estos valores para allocar espacio en memoria que pueda albergar las matrices tanto de entrada como de salida) y luego cargando la matriz de entrada.\\
+Una vez pasadas las validaciones, se proceder\'a a cargar la matriz primero obteniendo la cantidad de filas/columnas (utilizando estos valores para allocar espacio en memoria que pueda albergar las matrices tanto de entrada como de salida) y luego cargando la matriz de entrada.
 
-Se procede entonces a invocar a la funci\'on trasponer (que se encontrar\'a tanto en assembly como en c\'odigo c), pasandole los siguientes datos:\\
+Se procede entonces a invocar a la funci\'on trasponer (que se encontrar\'a tanto en assembly como en c\'odigo c), pasandole los siguientes datos:
 
 \begin{itemize}
 \item \textit{cantidad\_de\_filas}
@@ -146,7 +147,7 @@ Se procede entonces a invocar a la funci\'on trasponer (que se encontrar\'a tant
 Finalmente se procede a guardar la matriz obtenida en el archivo de salida (proveido por el usuario o mostrada por stdout) y liberando la memoria que se encuentra alocada para albergar las matrices de entrada y salida.
 
 
-\section{Copmilaci\'on del programa}
+\section{Compilación del programa}
 
 En el makefile, se especificaron las opciones para compilar el codigo. Es decir, se compilan los archivos \textbf{main.c} y \textbf{matrix.c} en el caso de compilar la totalidad del c\'odigo en c. 
 
@@ -154,7 +155,7 @@ En el makefile, se especificaron las opciones para compilar el codigo. Es decir,
 \textbf{make c}
 \end{center}
 
-A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembly, se utilizaron los archivos \textbf{main.c} y \textbf{matrix.S} con la opci\'on \textbf{-D\_\_MIPS\_\_} para establecer las opciones de compilaci\'on. En este \'ultimo caso se utilizo el entorno propuesto por la c\'atedra para compilar el programa y corer el programa en el sistema operativo NetBSD.\\
+A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembly, se utilizaron los archivos \textbf{main.c} y \textbf{matrix.S} con la opci\'on \textbf{-D\_\_MIPS\_\_} para establecer las opciones de compilaci\'on. En este \'ultimo caso se utilizo el entorno propuesto por la c\'atedra para compilar el programa y corer el programa en el sistema operativo NetBSD.
 
 \begin{center}
 \textbf{make assembly}
@@ -164,8 +165,13 @@ A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembly, s
 
 \begin{figure}
 \begin{center}
-\subfloat[]{\includegraphics[width = 2in]{img/matc.jpeg}} 
-\subfloat[]{\includegraphics[width = 2in]{img/matasm.jpeg}}
+\subfloat[]{\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/matc.jpeg}} 
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\subfloat[]{\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/matasm.jpeg}}
 \end{center}
 \caption{Resultados obtenidos para cada matriz de entrada}
 \label{some example}
@@ -178,9 +184,19 @@ Para ejecutar las pruebas basta con utilizar el comando \texttt{make test\_c} o
 
 \begin{figure}
 \begin{center}
-\subfloat[]{\includegraphics[width = 2in]{img/time1.jpeg}} \\
-\subfloat[]{\includegraphics[width = 2in]{img/time2.jpeg}} \\
-\subfloat[]{\includegraphics[width = 2in]{img/time3.jpeg}} 
+\subfloat[]{\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/time1.jpeg}}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\subfloat[]{\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/time2.jpeg}}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\subfloat[]{\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/time3.jpeg}} 
 \end{center}
 \caption{Tiempos de ejecuci\'on para cada matriz de entrada}
 \label{some example 2}
@@ -188,7 +204,7 @@ Para ejecutar las pruebas basta con utilizar el comando \texttt{make test\_c} o
 
 Las salidas para las corridas de las matrices provistas por la c\'atedra se muestran en la figura \ref{some example}. En pantalla se muestran primero las dimensiones de la matriz y luego el contenido de la misma. Notese que para la matriz3, donde el contenido del archivo no es v\'alido, se muestra un mensaje de error apropiado.
 
-Por otro lado, se midieron los tiempos de ejecuci\'on de los programas con la compilaci\'on del metodo \textit{trasponer} en assembly y c, y se obtuvieron resultados pr\'acticamente identicos (difieren en menos del 1\%). Los resultados se muestran en la figura \ref{some example 2}.\\
+Por otro lado, se midieron los tiempos de ejecuci\'on de los programas con la compilaci\'on del metodo \textit{trasponer} en assembly y c, y se obtuvieron resultados pr\'acticamente identicos (difieren en menos del 1\%). Los resultados se muestran en la figura \ref{some example 2}.
 
 Para medir los tiempos se utilizo una matriz que contiene un mill\'on de elementos (cien mil columnas por diez filas), para poder obtener resultados con tiempos apreciables. Nombramos a la matriz \textbf{bigMat.m}, y es la entrada utilizada en las corridas de la Figura \ref{some example 2}.
 
@@ -263,6 +279,8 @@ Respecto a los temas tratados en el presente proyecto, se podr\'ia estudiar que 
 \newpage
 
 \section{C\'odigos fuente}
+
+Repositorio: https://github.com/voices117/orga-6620-tp1
 
 \subsection{MakeFile}
 
