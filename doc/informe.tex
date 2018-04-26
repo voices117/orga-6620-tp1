@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 
 \usepackage{listings}
 \lstset{
@@ -133,7 +134,7 @@ Asimismo, se debieron tener en cuenta y validar los siguientes casos en donde al
 
 Una vez pasadas las validaciones, se proceder\'a a cargar la matriz primero obteniendo la cantidad de filas/columnas (utilizando estos valores para allocar espacio en memoria que pueda albergar las matrices tanto de entrada como de salida) y luego cargando la matriz de entrada.\\
 
-Se procede entonces a invocar a la funci\'on trasponer (que se encontrar\'a tanto en assembler como en c\'odigo c), pasandole los siguientes datos:\\
+Se procede entonces a invocar a la funci\'on trasponer (que se encontrar\'a tanto en assembly como en c\'odigo c), pasandole los siguientes datos:\\
 
 \begin{itemize}
 \item \textit{cantidad\_de\_filas}
@@ -153,7 +154,7 @@ En el makefile, se especificaron las opciones para compilar el codigo. Es decir,
 \textbf{make c}
 \end{center}
 
-A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembler, se utilizaron los archivos \textbf{main.c} y \textbf{matrix.S} con la opci\'on \textbf{-D\_\_MIPS\_\_} para establecer las opciones de compilaci\'on. En este \'ultimo caso se utilizo el entorno propuesto por la c\'atedra para compilar el programa y corer el programa en el sistema operativo NetBSD.\\
+A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembly, se utilizaron los archivos \textbf{main.c} y \textbf{matrix.S} con la opci\'on \textbf{-D\_\_MIPS\_\_} para establecer las opciones de compilaci\'on. En este \'ultimo caso se utilizo el entorno propuesto por la c\'atedra para compilar el programa y corer el programa en el sistema operativo NetBSD.\\
 
 \begin{center}
 \textbf{make assembly}
@@ -161,14 +162,35 @@ A la hora de compliar el c\'odigo utilizando la funci\'on escrita en assembler, 
 
 \section{Corridas de prueba}
 
-Para facilitar el desarrollo se implementó un pequeño conjunto de unit tests
-de la función trasponer que validan varias entradas y salidas.
+\begin{figure}
+\begin{center}
+\subfloat[]{\includegraphics[width = 2in]{img/matc.jpeg}} 
+\subfloat[]{\includegraphics[width = 2in]{img/matasm.jpeg}}
+\end{center}
+\caption{Resultados obtenidos para cada matriz de entrada}
+\label{some example}
+\end{figure}
+
+Para facilitar el desarrollo se implementó un pequeño conjunto de unit tests de la función trasponer que validan varias entradas y salidas.
 
 Para ejecutar las pruebas basta con utilizar el comando \texttt{make test\_c} o
-\texttt{make test\_assembly} y ejecutar el binario resultante.
+\texttt{make test\_assembly} y ejecutar el binario resultante. Esto resultó de gran ayuda al momento de desarrollar en assembly ya que permitió verificar rápidamente el correcto funcionamiento de código.
 
-Esto resultó de gran ayuda al momento de desarrollar en assembly ya que permitió
-verificar rápidamente el correcto funcionamiento de código.
+\begin{figure}
+\begin{center}
+\subfloat[]{\includegraphics[width = 2in]{img/time1.jpeg}} \\
+\subfloat[]{\includegraphics[width = 2in]{img/time2.jpeg}} \\
+\subfloat[]{\includegraphics[width = 2in]{img/time3.jpeg}} 
+\end{center}
+\caption{Tiempos de ejecuci\'on para cada matriz de entrada}
+\label{some example 2}
+\end{figure}
+
+Las salidas para las corridas de las matrices provistas por la c\'atedra se muestran en la figura \ref{some example}. En pantalla se muestran primero las dimensiones de la matriz y luego el contenido de la misma. Notese que para la matriz3, donde el contenido del archivo no es v\'alido, se muestra un mensaje de error apropiado.
+
+Por otro lado, se midieron los tiempos de ejecuci\'on de los programas con la compilaci\'on del metodo \textit{trasponer} en assembly y c, y se obtuvieron resultados pr\'acticamente identicos (difieren en menos del 1\%). Los resultados se muestran en la figura \ref{some example 2}.\\
+
+Para medir los tiempos se utilizo una matriz que contiene un mill\'on de elementos (cien mil columnas por diez filas), para poder obtener resultados con tiempos apreciables. Nombramos a la matriz \textbf{bigMat.m}, y es la entrada utilizada en las corridas de la Figura \ref{some example 2}.
 
 \section{Diagramas del Stack}
 
@@ -219,7 +241,11 @@ assembly, y cu\'al ser\'ia su costo final.
 
 \subsection{Preguntas disparadoras}
 
-[Incluir algunas preguntas que hayan surgido de la elaboraci\'on del proyecto]
+\begin{itemize}
+\item Se podr\'a hacer mas eficiente el m\'etodo \textit{traspuesta} escrito en assembly?
+\item Se podr\'a comparar el codigo asembler que se genera a partir del c\'odigo en c para comparar los pasos y obtener que instrucciones utiliza el compilador en comparaci\'on con las nuestras?
+\item Cu\'ales de las instrucciones usadas por el programa son las que consumen la mayor parte del tiempo?
+\end{itemize}
 
 \subsection{Problemas encontrados a lo largo del proyecto}
 
@@ -230,21 +256,30 @@ para poder avanzar instrucciones individuales.
 
 \subsection{Futuras investigaciones}
 
-[Incluir temas que podr\'ian seguir estudi\'andose m\'as a fondo]
+Respecto a los temas tratados en el presente proyecto, se podr\'ia estudiar que cambios se pueden hacer sobre la implementaci\'on en assembly para lograr que sea m\'as eficiente que c compilado con -O3. Asimismo, se podr\'ia hacer un an\'alisis de las instrucciones usadas por el compilador a la hora de compilar el programa.
 
 % SOlO codigos fuente hacia abajo, no hace falta editar!
 
+\newpage
 
 \section{C\'odigos fuente}
 
 \subsection{MakeFile}
 
 \begin{lstlisting}[numbers=left, tabsize=2, basicstyle=\fontsize{11}{13}\ttfamily, frame=single, caption={makefile}]
+GCC_FLAGS = -std=c99
+
 c: main.c matrix.c
-	gcc main.c matrix.c -o tp
+	gcc $(GCC_FLAGS) main.c matrix.c -o tp
 
 assembly: main.c matrix.S
-	gcc main.c matrix.S -o tp_assembly -D__MIPS__
+	gcc $(GCC_FLAGS) main.c matrix.S -o tp_assembly -D__MIPS__
+
+test_c: test_main.c matrix.c
+	gcc $(GCC_FLAGS) test_main.c matrix.c -o test_c
+
+test_assembly: test_main.c matrix.S
+	gcc $(GCC_FLAGS) test_main.c matrix.S -o test_assembly -D__MIPS__
 
 \end{lstlisting}
 
